@@ -119,16 +119,31 @@ namespace WindowsFormsApp1
 
         }
 
+        private void DrawArrow(Pen pen, Point point, bool left, bool down, bool vertical, int size = 4)
+        {
+            Point l;
+            Point r;
+            if (vertical)
+            {
+                l = down ? new Point(point.X - size, point.Y - size) : new Point(point.X - size, point.Y + size);
+                r = down ? new Point(point.X + size, point.Y - size) : new Point(point.X + size, point.Y + size);
+            }
+            else
+            {
+                //up
+                l = left ? new Point(point.X - size, point.Y - size) : new Point(point.X + size, point.Y - size);
+                //down
+                r = left ? new Point(point.X - size, point.Y + size) : new Point(point.X + size, point.Y + size);
+            }
+            graphics.DrawLine(pen, point, l);
+            graphics.DrawLine(pen, point, r);
+        }
+
         private void DrawConnection(GraphicBlock<T> from, GraphicBlock<T> to, int pointRadix = 3)
         {
             if (from == to)
             {
                 return;
-            }
-
-            if (from.X < to.X)
-            {
-
             }
 
             pen.Color = to.DefaultColor;
@@ -152,6 +167,7 @@ namespace WindowsFormsApp1
             }
             graphics.DrawEllipse(pen, f.X - pointRadix, f.Y - pointRadix, pointRadix*2, pointRadix*2);
             DrawLine(pen, f, t, left, down, vertical);
+            DrawArrow(pen, t, left, down, vertical);
         }
 
         public void DrawList(CustomList<GraphicBlock<T>> list)
