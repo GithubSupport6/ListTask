@@ -11,6 +11,8 @@ namespace WindowsFormsApp1.Files
     class FileParser
     {
 
+        public static string Keyword { get; set; } = "Block";
+
         private static string GetParamName(string line)
         {
             return line.Split('=')[0].Trim();
@@ -28,13 +30,13 @@ namespace WindowsFormsApp1.Files
             return String.Empty;
         }
 
-        public static void Save(CustomList<string> list, string filename)
+        public static void Save(CustomList<GraphicBlock<string>> list, string filename)
         {
             using (StreamWriter sw = new StreamWriter(filename))
             {
                 foreach (GraphicBlock<string> elem in list)
                 {
-                    sw.WriteLine("Block: (data={0},x={1},y={2},w={3},h={4})",
+                    sw.WriteLine(Keyword + " (data={0},x={1},y={2},w={3},h={4})",
                         elem.Data,
                         elem.X,
                         elem.Y,
@@ -55,7 +57,7 @@ namespace WindowsFormsApp1.Files
                 while (!sr.EndOfStream)
                 {
                     string line = sr.ReadLine();
-                    if (line.StartsWith("block: "))
+                    if (line.StartsWith(Keyword))
                     {
                         int startIndex = line.IndexOf('(');
                         int endIndex = line.IndexOf(')');
@@ -68,8 +70,8 @@ namespace WindowsFormsApp1.Files
                             GetParamValue(settings, "data"),
                             x,
                             y,
-                            GetParamValue(settings, "w") == "" ? default : Int32.Parse(GetParamValue(settings, "w")),
-                            GetParamValue(settings, "h") == "" ? default : Int32.Parse(GetParamValue(settings, "h"))
+                            GetParamValue(settings, "w") == "" ? GraphicBlock<string>.DefaultWidth : Int32.Parse(GetParamValue(settings, "w")),
+                            GetParamValue(settings, "h") == "" ? GraphicBlock<string>.DefaultHeight : Int32.Parse(GetParamValue(settings, "h"))
                         );
                         res.Add(block);
                     }

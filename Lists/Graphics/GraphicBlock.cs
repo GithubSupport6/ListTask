@@ -21,6 +21,10 @@ namespace WindowsFormsApp1
 
         public int Height { get; set; }
 
+        public static int DefaultWidth { get; } = 100;
+
+        public static int DefaultHeight { get; } = 20;
+
         public Point Up
         {
             get

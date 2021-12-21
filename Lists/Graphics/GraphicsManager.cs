@@ -79,14 +79,13 @@ namespace WindowsFormsApp1
         public Point FindPlace(CustomList<GraphicBlock<T>> list, Point point, Point size)
         {
             bool[,] place = new bool[Width, Height];
-            foreach (var item in list)
+            foreach (GraphicBlock<string> item in list)
             {
-                var elem = (GraphicBlock<T>)item;
-                for (int i = elem.Left.X - size.X; i< elem.Right.X + size.X; i++)
+                for (int i = item.Left.X - size.X; i< item.Right.X + size.X; i++)
                 {
                     if (i >=0 && i < Width)
                     {
-                        for (int j = elem.Up.Y - size.Y; j < elem.Down.Y + size.Y; j++)
+                        for (int j = item.Up.Y - size.Y; j < item.Down.Y + size.Y; j++)
                         {
                             if (j>=0 && j < Height)
                             {

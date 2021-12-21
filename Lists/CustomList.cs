@@ -37,9 +37,7 @@ namespace SimpleAlgorithmsApp
             T IEnumerator<T>.Current => currNode.data;
 
             public void Dispose()
-            {
-                throw new NotImplementedException();
-            }
+            {}
 
             public bool MoveNext()
             {

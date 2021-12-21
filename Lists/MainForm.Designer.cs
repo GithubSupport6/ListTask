@@ -115,6 +115,14 @@
             this.insertTextBox.Size = new System.Drawing.Size(118, 20);
             this.insertTextBox.TabIndex = 0;
             // 
+            // OpenFileDialog
+            // 
+            this.OpenFileDialog.Filter = "\"Text files (*.txt)|*.txt|All files (*.*)|*.*\"";
+            // 
+            // SaveFileDialog
+            // 
+            this.SaveFileDialog.Filter = "\"Text files (*.txt)|*.txt|All files (*.*)|*.*\"";
+            // 
             // Menu
             // 
             this.Menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {

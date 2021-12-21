@@ -214,7 +214,11 @@ namespace WindowsFormsApp1
 
         private void SaveMenuItem_Click(object sender, EventArgs e)
         {
-
+            if (SaveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                FileParser.Save(list, SaveFileDialog.FileName);
+            }
+            
         }
     }
 }
