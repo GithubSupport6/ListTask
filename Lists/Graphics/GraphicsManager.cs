@@ -35,9 +35,9 @@ namespace WindowsFormsApp1
             pen.Color = block.Color;
             Font font = new Font("Arial", fontSize);
 
-            SizeF size = graphics.MeasureString(block.Data.ToString(), font);
+            SizeF size = graphics.MeasureString("Data: " + block.Data.ToString(), font);
             SizeF numsize = graphics.MeasureString("N: ", font);
-            size = size + numsize;
+            size.Height = size.Height + numsize.Height;
             if (canBeAuthosized)
             {
                 block.Width = block.Width < size.Width ? (int)size.Width : block.Width;
