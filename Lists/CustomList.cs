@@ -16,9 +16,9 @@ namespace SimpleAlgorithmsApp
         }
     }
 
-    public class CustomList<T> : IEnumerable
+    public class CustomList<T> : IEnumerable<T>
     {
-        class CustomEnumerator : IEnumerator
+        class CustomEnumerator : IEnumerator<T>
         {
             CustomList<T> list;
             Node<T> currNode;
@@ -33,6 +33,13 @@ namespace SimpleAlgorithmsApp
             }
 
             public object Current => currNode.data;
+
+            T IEnumerator<T>.Current => currNode.data;
+
+            public void Dispose()
+            {
+                throw new NotImplementedException();
+            }
 
             public bool MoveNext()
             {
@@ -210,5 +217,9 @@ namespace SimpleAlgorithmsApp
             return new CustomEnumerator(this);
         }
 
+        IEnumerator<T> IEnumerable<T>.GetEnumerator()
+        {
+            return new CustomEnumerator(this);
+        }
     }
 }

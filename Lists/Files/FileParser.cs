@@ -32,9 +32,9 @@ namespace WindowsFormsApp1.Files
         {
             using (StreamWriter sw = new StreamWriter(filename))
             {
-                foreach (var elem in list)
+                foreach (GraphicBlock<string> elem in list)
                 {
-
+                    
                 }
             }
         }
