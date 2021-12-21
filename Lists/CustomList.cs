@@ -168,7 +168,7 @@ namespace SimpleAlgorithmsApp
                 }
                 else
                 {
-                    // если последний, переустанавливаем tail
+                    // если последний, переустанавливаем end
                     end = current.prev;
                 }
 
@@ -179,7 +179,7 @@ namespace SimpleAlgorithmsApp
                 }
                 else
                 {
-                    // если первый, переустанавливаем head
+                    // если первый, переустанавливаем begin
                     begin = current.next;
                 }
                 Length--;

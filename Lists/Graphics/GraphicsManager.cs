@@ -11,7 +11,7 @@ namespace WindowsFormsApp1
     class GraphicsManager<T>
     {
 
-        private int MaxCapacity = 100;
+        private int MaxCapacity = 50;
         Graphics graphics;
         Pen pen;
         Color color = Color.Black;
@@ -61,10 +61,11 @@ namespace WindowsFormsApp1
             middleY = down ? from.Y + (to.Y - from.Y) / 2 : to.Y + (from.Y - to.Y) / 2;
 
             if (!vertical)
-            {
+            {  
                 graphics.DrawLine(pen, from, new Point(middleX,from.Y));
                 graphics.DrawLine(pen, new Point(middleX, from.Y), new Point(middleX, to.Y));
                 graphics.DrawLine(pen, new Point(middleX, to.Y), to);
+
             }
             else
             {
@@ -118,7 +119,7 @@ namespace WindowsFormsApp1
 
         }
 
-        private void DrawConnection(GraphicBlock<T> from, GraphicBlock<T> to)
+        private void DrawConnection(GraphicBlock<T> from, GraphicBlock<T> to, int pointRadix = 3)
         {
             if (from == to)
             {
@@ -149,6 +150,7 @@ namespace WindowsFormsApp1
                 f = left ? from.Right : from.Left;
                 t = left ? to.Left : to.Right;
             }
+            graphics.DrawEllipse(pen, f.X - pointRadix, f.Y - pointRadix, pointRadix*2, pointRadix*2);
             DrawLine(pen, f, t, left, down, vertical);
         }
 
