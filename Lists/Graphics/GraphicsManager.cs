@@ -11,8 +11,6 @@ namespace WindowsFormsApp1
 {
     class GraphicsManager<T>
     {
-
-        private int MaxCapacity = 50;
         Graphics graphics;
         Pen pen;
         Color color = Color.Black;
@@ -37,7 +35,7 @@ namespace WindowsFormsApp1
             pen.Color = block.Color;
             graphics.DrawRectangle(pen, block.X, block.Y, block.Width, block.Height);
             Font font = new Font("Arial", fontSize);
-            graphics.DrawString("N:" + index + " " + block.Data.ToString(), font, new SolidBrush(pen.Color), block.X + 1, block.Y + 1);
+            graphics.DrawString("N:" + (index+1) + " " + block.Data.ToString(), font, new SolidBrush(pen.Color), block.X + 1, block.Y + 1);
         }
 
         private void DrawLineUpDown(Point from, Point to)

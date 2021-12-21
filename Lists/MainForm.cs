@@ -16,7 +16,6 @@ namespace WindowsFormsApp1
     public partial class MainForm : Form
     {
         CustomList<GraphicBlock<string>> list;
-        CustomList<GraphicBlock<string>> freeBlocks;
         Graphics g;
         GraphicsManager<string> manager;
 
@@ -25,6 +24,7 @@ namespace WindowsFormsApp1
         bool isOnMove = false;
         bool isOnBlock = false;
 
+        int MaxCapacity = 50;
         
 
         public MainForm()
@@ -45,6 +45,11 @@ namespace WindowsFormsApp1
             var renderTimer = new Timer();
             
 
+        }
+
+        private bool IsPossibleToInsert()
+        {
+            return list.Count() < MaxCapacity;
         }
 
         private void MainPanel_Paint(object sender, PaintEventArgs e)
@@ -189,13 +194,28 @@ namespace WindowsFormsApp1
 
         private void InsertButton_Click(object sender, EventArgs e)
         {
-            InsertAfterOrBefore(sender, e, true);
+            if (!IsPossibleToInsert())
+            {
+                MessageBox.Show("Too many elements in list!", "Message", MessageBoxButtons.OK);
+            }
+            else
+            {
+                InsertAfterOrBefore(sender, e, true);
+            }
             MainPanel.Invalidate();
         }
 
         private void BeforeButton_Click(object sender, EventArgs e)
         {
-            InsertAfterOrBefore(sender, e, false);
+            if (!IsPossibleToInsert())
+            {
+                MessageBox.Show("Too many elements in list!", "Message", MessageBoxButtons.OK);
+                
+            }
+            else
+            {
+                InsertAfterOrBefore(sender, e, false);
+            }
             MainPanel.Invalidate();
         }
 
@@ -203,9 +223,15 @@ namespace WindowsFormsApp1
         {
             if (OpenFileDialog.ShowDialog() == DialogResult.OK)
             {
-                if (list.IsEmpty || list == null)
+                if (!list.IsEmpty && list != null)
                 {
-                    
+                    if (MessageBox.Show("Changes unsaved, do you want to save it?","Message",MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        if (SaveFileDialog.ShowDialog() == DialogResult.OK)
+                        {
+                            FileParser.Save(list, SaveFileDialog.FileName);
+                        }
+                    }
                 }
                 var newList = FileParser.Parse(OpenFileDialog.FileName);
                 list = newList;
