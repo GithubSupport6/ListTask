@@ -76,6 +76,17 @@ namespace WindowsFormsApp1
             Height = (int)(Height * size);
         }
 
+        public void Resize(Graphics graphics)
+        {
+            Font font = new Font("Arial", FontSize);
+            SizeF size = graphics.MeasureString("Data: " + Data.ToString(), font);
+            SizeF numsize = graphics.MeasureString("N: ", font);
+            size.Height = size.Height + numsize.Height;
+
+            Width = Width < size.Width ? (int)size.Width : Width;
+            Height = Height < size.Height ? (int)size.Height : Height;
+        }
+
         public GraphicBlock(T data, int x, int y, int w = 100, int h = 20)
         {
             this.Data = data;

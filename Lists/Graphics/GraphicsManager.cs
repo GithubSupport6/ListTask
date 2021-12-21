@@ -29,20 +29,24 @@ namespace WindowsFormsApp1
             this.graphics = graphics;
         }
 
-        private void DrawBlock(GraphicBlock<T> block, int index, bool canBeAuthosized = true)
+        public void ResizeBlocks(CustomList<GraphicBlock<string>> blocks)
+        {      
+            foreach (GraphicBlock<string> block in blocks)
+            {
+                block.Resize(graphics);
+            }
+        }
+
+        private void DrawBlock(GraphicBlock<T> block, int index)
         {
             int fontSize = block.FontSize;
             pen.Color = block.Color;
-            Font font = new Font("Arial", fontSize);
 
+            Font font = new Font("Arial", block.FontSize);
             SizeF size = graphics.MeasureString("Data: " + block.Data.ToString(), font);
             SizeF numsize = graphics.MeasureString("N: ", font);
             size.Height = size.Height + numsize.Height;
-            if (canBeAuthosized)
-            {
-                block.Width = block.Width < size.Width ? (int)size.Width : block.Width;
-                block.Height = block.Height < size.Height ? (int)size.Height : block.Height;
-            }
+
 
             graphics.DrawRectangle(pen, block.X, block.Y, block.Width, block.Height);
             

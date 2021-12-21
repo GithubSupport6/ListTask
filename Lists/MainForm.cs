@@ -23,6 +23,8 @@ namespace WindowsFormsApp1
         GraphicBlock<string> clicked;
         bool isOnMove = false;
         bool isOnBlock = false;
+        bool isResized = false;
+        bool canBeResized = true;
 
         int MaxCapacity = 50;
         
@@ -42,9 +44,6 @@ namespace WindowsFormsApp1
             //list.Add(new GraphicBlock<string>("Element 1",50,10));
             //list.Add(new GraphicBlock<string>("Element 2", 200, 10));
             //list.Add(new GraphicBlock<string>("Element 3", 350, 10));
-            var renderTimer = new Timer();
-            
-
         }
 
         private bool IsPossibleToInsert()
@@ -57,6 +56,11 @@ namespace WindowsFormsApp1
             e.Graphics.Clear(DefaultBackColor);
             manager.SetGraphic(e.Graphics);
             manager.DrawList(list);
+            if (canBeResized && !isResized)
+            {
+                manager.ResizeBlocks(list);
+                isResized = true;
+            }
         }
 
         private void MainPanel_MouseMove(object sender, MouseEventArgs e)
@@ -190,6 +194,7 @@ namespace WindowsFormsApp1
                 }
                 
             }
+            isResized = false;
         }
 
         private void InsertButton_Click(object sender, EventArgs e)
@@ -235,6 +240,7 @@ namespace WindowsFormsApp1
                 }
                 var newList = FileParser.Parse(OpenFileDialog.FileName);
                 list = newList;
+                isResized = false;
             }
         }
 
@@ -243,8 +249,7 @@ namespace WindowsFormsApp1
             if (SaveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 FileParser.Save(list, SaveFileDialog.FileName);
-            }
-            
+            }      
         }
     }
 }
