@@ -34,7 +34,13 @@ namespace WindowsFormsApp1.Files
             {
                 foreach (GraphicBlock<string> elem in list)
                 {
-                    
+                    sw.WriteLine("Block: (data={0},x={1},y={2},w={3},h={4})",
+                        elem.Data,
+                        elem.X,
+                        elem.Y,
+                        elem.Width,
+                        elem.Height
+                    );
                 }
             }
         }
