@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsFormsApp1.Files;
 
 namespace WindowsFormsApp1
 {
@@ -196,6 +197,24 @@ namespace WindowsFormsApp1
         {
             InsertAfterOrBefore(sender, e, false);
             MainPanel.Invalidate();
+        }
+
+        private void OpenMenuItem_Click(object sender, EventArgs e)
+        {
+            if (OpenFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                if (list.IsEmpty || list == null)
+                {
+                    
+                }
+                var newList = FileParser.Parse(OpenFileDialog.FileName);
+                list = newList;
+            }
+        }
+
+        private void SaveMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

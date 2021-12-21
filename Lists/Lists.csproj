@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Files\FileParser.cs" />
     <Compile Include="Geometry\GeometryHelper.cs" />
     <Compile Include="Graphics\GraphicBlock.cs" />
     <Compile Include="Graphics\GraphicsManager.cs" />
