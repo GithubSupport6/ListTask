@@ -29,7 +29,7 @@ namespace WindowsFormsApp1
             this.graphics = graphics;
         }
 
-        private void DrawBlock(GraphicBlock<T> block, int index)
+        private void DrawBlock(GraphicBlock<T> block, int index, bool canBeAuthosized = true)
         {
             int fontSize = block.FontSize;
             pen.Color = block.Color;
@@ -38,8 +38,11 @@ namespace WindowsFormsApp1
             SizeF size = graphics.MeasureString(block.Data.ToString(), font);
             SizeF numsize = graphics.MeasureString("N: ", font);
             size = size + numsize;
-            block.Width = block.Width < size.Width ? (int)size.Width : block.Width;
-            block.Height = block.Height < size.Height ? (int)size.Height : block.Height;
+            if (canBeAuthosized)
+            {
+                block.Width = block.Width < size.Width ? (int)size.Width : block.Width;
+                block.Height = block.Height < size.Height ? (int)size.Height : block.Height;
+            }
 
             graphics.DrawRectangle(pen, block.X, block.Y, block.Width, block.Height);
             
