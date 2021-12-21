@@ -33,9 +33,29 @@ namespace WindowsFormsApp1
         {
             int fontSize = block.FontSize;
             pen.Color = block.Color;
-            graphics.DrawRectangle(pen, block.X, block.Y, block.Width, block.Height);
             Font font = new Font("Arial", fontSize);
-            graphics.DrawString("N:" + (index+1) + " " + block.Data.ToString(), font, new SolidBrush(pen.Color), block.X + 1, block.Y + 1);
+
+            SizeF size = graphics.MeasureString(block.Data.ToString(), font);
+            SizeF numsize = graphics.MeasureString("N: ", font);
+            size = size + numsize;
+            block.Width = block.Width < size.Width ? (int)size.Width : block.Width;
+            block.Height = block.Height < size.Height ? (int)size.Height : block.Height;
+
+            graphics.DrawRectangle(pen, block.X, block.Y, block.Width, block.Height);
+            
+            SolidBrush brush = new SolidBrush(pen.Color);
+            graphics.DrawString("N: " + (index + 1), font, brush, block.X, block.Y);
+            graphics.DrawLine(pen,
+                new Point(block.X + 1,block.Y + (int)numsize.Height),
+                new Point(block.Right.X, block.Y + (int)numsize.Height)
+            );
+
+            graphics.DrawString("Data: " + block.Data.ToString(),
+                font,
+                brush,
+                block.X + 1,
+                block.Y + (int)numsize.Height + 1
+           );
         }
 
         private void DrawLineUpDown(Point from, Point to)

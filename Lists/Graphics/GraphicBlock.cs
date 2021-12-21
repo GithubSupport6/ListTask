@@ -23,7 +23,7 @@ namespace WindowsFormsApp1
 
         public static int DefaultWidth { get; } = 100;
 
-        public static int DefaultHeight { get; } = 20;
+        public static int DefaultHeight { get; } = 40;
 
         public Point Up
         {
@@ -67,13 +67,8 @@ namespace WindowsFormsApp1
             Color = select ? Color.Red : Color.Black;
         }
 
-        public int FontSize
-        {
-            get
-            {
-                return (int)(Height * 0.5);
-            }
-        }
+        public int FontSize { get; } = 10;
+
 
         public void SetSize(double size)
         {
