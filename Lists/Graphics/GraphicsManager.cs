@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WindowsFormsApp1.Geometry;
 
 namespace WindowsFormsApp1
 {
@@ -75,11 +76,6 @@ namespace WindowsFormsApp1
             }
         }
 
-        private double GetDistance(Point p1, Point p2)
-        {
-            return Math.Sqrt(Math.Pow(p1.X - p2.X, 2) + Math.Pow(p1.Y - p2.Y, 2));
-        }
-
         public Point FindPlace(CustomList<GraphicBlock<T>> list, Point point, Point size)
         {
             bool[,] place = new bool[Width, Height];
@@ -107,7 +103,7 @@ namespace WindowsFormsApp1
             {
                 for (int j = 0; j < Height; j++)
                 {
-                    double dist = GetDistance(point, new Point(i, j));
+                    double dist = GeometryHelper.GetDistance(point, new Point(i, j));
                     if (dist < mindist && !place[i,j])
                     {
                         mindist = dist;
