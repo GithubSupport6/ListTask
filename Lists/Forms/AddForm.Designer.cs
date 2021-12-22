@@ -40,6 +40,7 @@ namespace WindowsFormsApp1
             // DataTextBox
             // 
             this.DataTextBox.Location = new System.Drawing.Point(12, 12);
+            this.DataTextBox.MaxLength = 8;
             this.DataTextBox.Name = "DataTextBox";
             this.DataTextBox.Size = new System.Drawing.Size(211, 20);
             this.DataTextBox.TabIndex = 0;
