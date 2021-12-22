@@ -119,8 +119,35 @@ namespace WindowsFormsApp1
             }
         }
 
+        private void RightButtonInsert(object sender, MouseEventArgs e)
+        {
+            AddForm addForm = new AddForm(list.Count());
+            addForm.Location = e.Location + ((Size)this.Location);
+            if (addForm.ShowDialog() == DialogResult.OK)
+            {
+                int index = addForm.index;
+                string data = addForm.data;
+                if (addForm.isInsert)
+                {
+                    InsertAfterOrBefore(data, addForm.isAfter);
+                    
+                }
+                else
+                {
+                    list.ElementAt(index).Data = data; 
+                }
+            }
+
+        }
+
         private void MainPanel_MouseClick(object sender, MouseEventArgs e)
         {
+            if (e.Button == MouseButtons.Right && IsPossibleToInsert())
+            {
+                RightButtonInsert(sender, e);
+                return;
+            }
+
             if (isOnBlock)
             {
                 if (clicked != null)
@@ -144,7 +171,14 @@ namespace WindowsFormsApp1
             }
         }
 
-        private void InsertAfterOrBefore(object sender, EventArgs e, bool isAfter)
+        private GraphicBlock<string> CreateGraphicBlock(string data, Point center, Point size)
+        {
+            Point point = manager.FindPlace(list, center, size);
+            var newBlock = new GraphicBlock<string>(data, point.X, point.Y);
+            return newBlock;
+        }
+
+        private void InsertAfterOrBefore(string data, bool isAfter)
         {
             GraphicBlock<string> newBlock;
 
@@ -152,9 +186,7 @@ namespace WindowsFormsApp1
             {
                 Point center = new Point(clicked.X, clicked.Y);
                 Point size = new Point(clicked.Width, clicked.Height);
-
-                Point point = manager.FindPlace(list, center, size);
-                newBlock = new GraphicBlock<string>(insertTextBox.Text, point.X, point.Y);
+                newBlock = CreateGraphicBlock(data, center, size);
                 int index = 0;
                 foreach (var item in list)
                 {
@@ -177,13 +209,9 @@ namespace WindowsFormsApp1
             else
             {
                 Point center = new Point(Width / 2, Height / 2);
-                Point size = new Point(100, 20);
+                Point size = new Point(GraphicBlock<string>.DefaultWidth, GraphicBlock<string>.DefaultHeight);
 
-                Point point = manager.FindPlace(list, center, size);
-                newBlock = new GraphicBlock<string>(insertTextBox.Text,
-                    point.X,
-                    point.Y
-                );
+                newBlock = CreateGraphicBlock(data, center, size);
                 if (list.IsEmpty || isAfter)
                 {
                     list.Add(newBlock);
@@ -194,6 +222,7 @@ namespace WindowsFormsApp1
                 }
                 
             }
+            isResized = false;
         }
 
         private void InsertButton_Click(object sender, EventArgs e)
@@ -204,7 +233,7 @@ namespace WindowsFormsApp1
             }
             else
             {
-                InsertAfterOrBefore(sender, e, true);
+                InsertAfterOrBefore(insertTextBox.Text, true);
             }
             MainPanel.Invalidate();
         }
@@ -217,7 +246,7 @@ namespace WindowsFormsApp1
             }
             else
             {
-                InsertAfterOrBefore(sender, e, false);
+                InsertAfterOrBefore(insertTextBox.Text, false);
             }
             MainPanel.Invalidate();
         }
@@ -249,5 +278,6 @@ namespace WindowsFormsApp1
                 FileParser.Save(list, SaveFileDialog.FileName);
             }      
         }
+
     }
 }
