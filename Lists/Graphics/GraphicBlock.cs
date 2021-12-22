@@ -68,8 +68,6 @@ namespace WindowsFormsApp1
         }
 
         public int FontSize { get; } = 10;
-
-
         public void SetSize(double size)
         {
             Width = (int)(Width * size * 5);
@@ -78,13 +76,21 @@ namespace WindowsFormsApp1
 
         public void Resize(Graphics graphics)
         {
-            Font font = new Font("Arial", FontSize);
-            SizeF size = graphics.MeasureString("Data: " + Data.ToString(), font);
+            var newSize = GraphicBlock<T>.GetProperSize(graphics, this);
+            Width = newSize.X;
+            Height = newSize.Y;
+        }
+
+        public static Point GetProperSize(Graphics graphics, GraphicBlock<T> block)
+        {
+            Font font = new Font("Arial", block.FontSize);
+            SizeF size = graphics.MeasureString("Data: " + block.Data.ToString(), font);
             SizeF numsize = graphics.MeasureString("N: ", font);
             size.Height = size.Height + numsize.Height;
-
-            Width = Width < size.Width ? (int)size.Width : Width;
-            Height = Height < size.Height ? (int)size.Height : Height;
+            Point res = new Point(0,0);
+            res.X = block.Width < size.Width ? (int)size.Width : block.Width;
+            res.Y = block.Height < size.Height ? (int)size.Height : block.Height;
+            return res;
         }
 
         public GraphicBlock(T data, int x, int y, int w = 100, int h = 20)

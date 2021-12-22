@@ -194,7 +194,6 @@ namespace WindowsFormsApp1
                 }
                 
             }
-            isResized = false;
         }
 
         private void InsertButton_Click(object sender, EventArgs e)
@@ -215,7 +214,6 @@ namespace WindowsFormsApp1
             if (!IsPossibleToInsert())
             {
                 MessageBox.Show("Too many elements in list!", "Message", MessageBoxButtons.OK);
-                
             }
             else
             {
