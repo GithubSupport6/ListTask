@@ -8,6 +8,6 @@
  - Or open a .txt file with blocks
  - Also you can save it in a textfile
 
-##A format of the textfile
+## A format of the textfile
  - Strings start with "Block " are couinting as blocks
  - Next params should be in the next format: (data=<data>,x=<x-position>,y=<y=position>,w=<width>,h=<height>)
